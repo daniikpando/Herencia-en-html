@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+	html,body{
+		margin: 0;
+		padding: 0;
+		width: 100%;
+		height: 100%;
+	}
+	h1{
+		padding: 0;
+		margin: 0;
+	}
+	.container{
+		margin: 0 auto;
+		width: 40%;
+	}
+	#texto_a_crear{
+		width: 100%;
+		height: 30px;
+		border-width: 3px;
+		border: solid #636262;
+	}
+	.selector_p {
+		color: #000;
+		font-family: Times;
+		font-weight: 500;
+	}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<h1>Introduce texto en el campo</h1>
+		<input type="text" id="texto_a_crear" placeholder="introduce texto">
+		<br>
+		<button id="boton">Crear nota</button>
+		<button id="boton2">Eliminar nota</button>
+	</div>
+	<script>
+	(function(){	
+		App = function(text,div,boton,boton2){
+			object = this;
+			this.i_texto = text;
+			this.container = div;
+			this.boton = boton;
+			this.boton2 = boton2;
+			this.numero = 0;
+			//this.boton2.disabled = true;
+			this.evento();
+		}
+		App.prototype.evento = function(){
+			this.boton.addEventListener("click",function(){
+				object.crear_h1();
+			});
+			this.boton2.addEventListener("click",eliminacion);
+		}
+		function eliminacion(){
+			object.eliminar_h1();
+		}
+		App.prototype.crear_h1 = function(){
+			if(this.i_texto.value != ""){
+				this.numero++;
+				this.atributo = document.createElement('p');
+				this.container.appendChild(this.atributo);
+				this.atributo.textContent = this.numero + ". "+ this.i_texto.value;
+				this.atributo.className = "selector_p";
+			}
+			this.i_texto.value = "";
+		}
+		App.prototype.eliminar_h1 = function(){
+			if(this.numero>0){
+				this.numero--;
+				this.container.removeChild(this.container.lastChild);
+			}
+		}
+	}());
+
+
+	window.onload = function(){
+		var text = document.getElementById('texto_a_crear');
+		var div = document.querySelector('.container');
+		var boton = document.getElementById('boton');
+		var boton2 = document.getElementById('boton2');
+		app = new App(text,div,boton,boton2);
+	}
+	</script>
+</body>
+</html>
